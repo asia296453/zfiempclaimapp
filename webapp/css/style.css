@@ -1,0 +1,146 @@
+.formNoTitle h6{
+display: none;
+}
+.zspace {
+    margin-right: 1rem;
+}
+.zlinkcut.sapMLnk {
+    color: black;
+}
+.zlinkcut.sapMLnk:visited {
+    color: black;
+}
+.formNoTitle h4{font-weight: bold;}
+.formNoTitle h5{
+    display: none;
+    }
+    .zspacerem{
+        margin-top: -1.5rem;
+    }
+.zrightcheckbox {
+    margin-right: -4rem;
+    }
+.estlabel{
+    padding-bottom: 11.9%;
+}
+.zlabel {
+    padding-left: 2rem;
+    /* padding-right: 2rem; */
+    padding-top: 0.8rem;
+    font-weight: bold;
+}
+.zSerialNo{
+    padding-top: 0.5rem;
+    font-weight: bold;
+    padding-left: 1rem;
+}
+.zSerialNo2{
+    padding-top: 0.5rem;
+    font-weight: bold;
+    padding-left: 1rem;
+    color: red;
+}
+.zlbl{
+    padding-top: 0.8rem;
+    font-weight: bold;
+    padding-left: 1rem;
+}
+
+.ztext{
+    padding-top: 0.5rem;
+    padding-left: 1rem;
+}
+.zdatepicker{
+    padding-left: 1rem;
+}
+.zstatus{
+    padding-top: 0.5rem;
+    padding-left: 3rem;
+    font-weight: bold;
+}
+
+.zinput{
+    /* padding-top: 0.5rem; */
+    /* padding-left: 1rem; */
+}
+.zinput1{
+    /* padding-top: 0.5rem; */
+    /* padding-left: 1rem; */
+}
+.zlabel1 {
+    padding-left: 20rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    font-weight: bold;
+}
+.zlabel2 {
+    padding-left: 2rem;
+    /* padding-right: 2rem; */
+    padding-top: 0.8rem;
+    font-weight: bold;
+}
+.zinput {
+    margin-top: 0.5rem;
+}
+.marTop15 {
+	margin-top: 1.5rem !important;
+
+}
+
+
+.marTopP5 {
+	margin-top: 0.5rem !important;
+
+}
+
+.labelAlign1{
+    height: 2rem!important;
+    line-height: 1rem!important;
+}
+.labelAlign15{
+ height: 2rem!important;
+    line-height: 1.5rem!important;	
+}
+.labelAlign{
+    height: 2rem!important;
+    line-height: 2rem!important;
+}
+.labelAlign2{
+    height: 2rem!important;
+    line-height: 3rem!important;
+}
+.labelAlign25{
+    height: 2rem!important;
+    line-height: 2.5rem!important;
+}
+.sapUiSizeCompact .sapUxAPObjectPageSectionHeader, .sapUxAPObjectPageSectionHeader{
+    height: 0rem !important;
+}
+.btnapprall {
+    margin-left: 13.60rem !important;
+}
+.btnrejall  {
+    margin: 3px 0 0 0.5rem !important;
+}
+.sapMITBHead{
+    white-space: unset !important;
+}
+
+.sapMITBVertical {
+    height: 5.625rem !important;
+}
+
+.sapUiRespGridMedia-Std-Tablet.sapUiRespGridHSpace0>.sapUiRespGridSpanM6 {
+    width: 30% !important;
+}
+.zchk .sapUiFormResGridCont{
+    padding-bottom: 0rem !important;
+}
+.attbutn {
+    margin-left: 25rem;
+    margin-right: 0.5rem;
+}
+
+.attbutn1{
+    margin-right: 0.5rem;
+}

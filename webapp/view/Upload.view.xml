@@ -1,0 +1,107 @@
+<mvc:View controllerName="zfiempclaimapp.controller.Upload"
+    xmlns:mvc="sap.ui.core.mvc" 
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:u="sap.ui.unified"
+    xmlns:f="sap.ui.layout.form"  >
+    <Page id="page" title="{i18n>title}">
+               <f:SimpleForm
+            editable="true"
+            layout="ResponsiveGridLayout"
+            labelSpanXL="12"
+            labelSpanL="12"
+            labelSpanM="12"
+            labelSpanS="12"
+            adjustLabelSpan="false"
+            emptySpanXL="0"
+            emptySpanL="0"
+            emptySpanM="0"
+            emptySpanS="0"
+            columnsXL="1"
+            columnsL="1"
+            columnsM="1"
+            singleContainerFullSize="false"
+            class=""
+        >
+
+         <f:content>
+                <Table headerText="" id="outputtbl"
+                    items="{path:'TableModel>/data',templateShareable: false}" >
+                    <headerToolbar>	<OverflowToolbar style="Clear">
+                    <u:FileUploader id="FileUploaderId" sameFilenameAllowed="true" iconOnly="false" buttonOnly="true" fileType="XLSX,xlsx"
+						buttonText="Upload Spreadsheet" icon="sap-icon://excel-attachment" iconFirst="true" style="Emphasized" change="onUpload"/>
+                    <ToolbarSpacer />						
+						<Button icon="sap-icon://excel-attachment" press="onExport"/>
+                        	</OverflowToolbar></headerToolbar>
+                    <columns>
+                        <Column>
+                            <Text text="Ref No."/>
+                        </Column>
+
+                        <Column>
+                            <Text text="File No." />
+                        </Column>
+
+                        <Column>
+                            <Text text="Proceeding on vacation" />
+                        </Column>
+                        <Column>
+                            <Text text="Proceeding on emergency leave" />
+                        </Column>
+                        
+                        <Column>
+                            <Text text="Inter-company transfer" />
+                        </Column>
+                        
+                        <Column>
+                            <Text text="Newly Recruited" />
+                        </Column>
+                        
+                        <Column>
+                            <Text text="Inter-departmental transfer" />
+                        </Column>
+                        
+                        <Column>
+                            <Text text="Department/Site" /> 
+                        </Column>
+
+                        <Column>
+                            <Text text="Transfer To (Remarks)" /> 
+                        </Column>
+
+                        <Column>
+                            <Text text="Last working Day" />
+                        </Column>
+
+                    </columns>
+                    <items>                   
+                        <ColumnListItem>
+                          <Text text="{TableModel>Claimno}"/> 
+                          <Text text="{TableModel>EmpNo}"/>
+
+                             <Text text="{TableModel>ProcdVac}"/>
+                                <Text text="{TableModel>ProcdEmer}"/>
+                                <Text text="{TableModel>IcTrans}"/>
+                                <Text text="{TableModel>NewRec}"/>
+                                <Text text="{TableModel>IdTrans}"/>
+                                <Text text="{TableModel>DepartmentSite}"/>
+                                <Text text="{TableModel>TransRem}"/>                                   
+                                  <Text text="{path: 'TableModel>LastWDay', formatter: '.formatDate'}"/>
+
+                                 
+                                   
+                               
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </f:content>
+       
+         </f:SimpleForm>
+         	<footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button type="Reject" text="Cancel" press="oncancelupload"/>
+			</OverflowToolbar>
+		</footer>
+    </Page>
+</mvc:View>
