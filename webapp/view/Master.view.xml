@@ -12,10 +12,14 @@
 		<semantic:content>
 			<PullToRefresh id="pullToRefresh" visible="{device>/support/touch}" refresh="onRefresh"/>
 			<!-- For client side filtering add this to the items attribute:  parameters: {operationMode: 'Client'}}" -->
-			 <List id="list" items="{ path: '/CRWFLOGSet', sorter: { path: 'Claimno', descending: false }, groupHeaderFactory: '.createGroupHeader' }"
+			 <List id="list" items="{MasterList>/results}"
 				busyIndicatorDelay="{masterView>/delay}" noDataText="{masterView>/noDataText}" 
 				mode="{= ${device>/system/phone} ? 'None' : 'SingleSelectMaster'}" growing="true" growingScrollToLoad="true"
-				updateFinished="onUpdateFinished" selectionChange="onSelectionChange" updateStarted="onupdateStarted"> 
+				updateFinished="onUpdateFinished" selectionChange="onSelectionChange" > 
+			 <!-- <List id="list" items="{ path: '/CRWFLOGSet', sorter: { path: 'Claimno', descending: false }, groupHeaderFactory: '.createGroupHeader' }"
+				busyIndicatorDelay="{masterView>/delay}" noDataText="{masterView>/noDataText}" 
+				mode="{= ${device>/system/phone} ? 'None' : 'SingleSelectMaster'}" growing="true" growingScrollToLoad="true"
+				updateFinished="onUpdateFinished" selectionChange="onSelectionChange" updateStarted="onupdateStarted">  -->
 				<!-- <List id="list" items="{ path: '/CLAIMREQSet', sorter: { path: 'Claimno', descending: false }, groupHeaderFactory: '.createGroupHeader' }"
 				busyIndicatorDelay="{masterView>/delay}" noDataText="{masterView>/noDataText}" 
 				mode="{= ${device>/system/phone} ? 'None' : 'SingleSelectMaster'}" growing="true" growingScrollToLoad="true"
@@ -39,15 +43,15 @@
 				<CustomListItem>
 			<HBox>
 				<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom" >
-				<Label text="Claimno: {path:'Claimno', formatter:'.formatter.updateSerialNo'}"/>
+				<Label text="Claimno: {path:'MasterList>Claimno', formatter:'.formatter.updateSerialNo'}"/>
 				<HBox>
 				<!-- <Label text="Status: {path:'LotNumber', formatter:'.formatter.updateLotsNo'}"/> -->
 				<!-- <Label class="zspace"/>
 				<Link class="zlinkcut" text="{parts:[{path:'Ebeln'},{path:'VelNum'}], formatter:'.formatter.updateStatus'}" target="Claimno: {path:'Claimno', formatter:'.formatter.updateSerialNo'}" press="onSelectionChange"/> -->
 				</HBox>
 				
-				<Label text="{ parts: [{ path: 'Status' }], formatter: '.formatstatusapp' }"/>
-				<Label text="{Pernr}"/>								
+				<Label text="{ parts: [{ path: 'MasterList>Status' }], formatter: '.formatstatusapp' }"/>
+				<Label text="{MasterList>Pernr}"/>								
 				</VBox>
 			</HBox>
 		</CustomListItem>
@@ -56,8 +60,8 @@
 		</semantic:content>
 		<semantic:addAction>
 			<!--	<Button text="Create" type="Emphasized" icon="sap-icon://create" press="onAdd"/>-->
-			<semantic:AddAction id="addButton" enabled="{appView>/addEnabled}"
-			visible="{LocalModel>/createEnabled}" press="onCreateManpower"/>
+			<!-- <semantic:AddAction id="addButton" enabled="{appView>/addEnabled}"
+			visible="{LocalModel>/createEnabled}" press="onCreateManpower"/> -->
 		</semantic:addAction>
 			<!-- <semantic:customFooterContent>
 					<OverflowToolbarButton  icon="sap-icon://upload" text="Upload" press="onPressNewUpload"/>

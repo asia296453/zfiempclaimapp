@@ -26,6 +26,7 @@ sap.ui.define(["sap/ui/core/UIComponent", "sap/ui/Device", "zfiempclaimapp/model
             this.setModel(new sap.ui.model.json.JSONModel(), "UploadAttachmentModel");
             this.setModel(new sap.ui.model.json.JSONModel(), "AttachmentType");
 			this.setModel(new sap.ui.model.json.JSONModel(), "Master");
+			this.setModel(new sap.ui.model.json.JSONModel(), "MasterList");
 
 			var jModel28 = new sap.ui.model.json.JSONModel();
             this.setModel(jModel28, "DisplayAttachmentModel");
@@ -33,8 +34,9 @@ sap.ui.define(["sap/ui/core/UIComponent", "sap/ui/Device", "zfiempclaimapp/model
             this.setModel(jModel29, "UploadAttachmentModel");
 			var jModel30 = new sap.ui.model.json.JSONModel();
             this.setModel(jModel30, "AttachmentType");
-
+			
 		},
+		
 		destroy: function () {
 			this.oListSelector.destroy();
 			this._oErrorHandler.destroy();

@@ -206,33 +206,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
         },
 
        
-        getOdata: function (surl, smodelname, ofilter) {
-            if (ofilter === null) {
-                this.showBusy(true);
-                this.getView().getModel().read(surl, {
-                    success: function (oData) {
-                        this.showBusy(false);
-                        this.getModel(smodelname).setProperty("/results", oData.results);
-                    }.bind(this),
-                    error: function (oError) {
-                        this.showBusy(false);
-                    }.bind(this)
-                });
-            } else {
-                this.showBusy(true);
-                this.getView().getModel().read(surl, {
-                    filters: [ofilter],
-                    success: function (oData) {
-                        this.showBusy(false);
-                        this.getModel(smodelname).setProperty("/results", oData.results);
-
-                    }.bind(this),
-                    error: function (oError) {
-                        this.showBusy(false);
-                    }.bind(this)
-                });
-            }
-        },
+       
 
         onClosePO: function (oEvent) {
             //this.opo.close();
@@ -304,38 +278,53 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
             this.getOdata("/CLAIMREQSet(Claimno='" + sValue + "',Pernr='')","display", null);
             this.getOdata("/CRWFLOGSet","approvallog", oFilter);
           },
-        getOdata: function (surl, smodelname, ofilter) {
+          getOdata: function (surl, smodelname, ofilter) {
+            return new Promise((resolve, reject) => {
             if (ofilter === null) {
                 this.showBusy(true);
-                this.getView().getModel().read(surl, {
+                this.getOwnerComponent().getModel().read(surl, {
                     success: function (oData) {
                         this.showBusy(false);
-                        if(oData.results === undefined){
-                            this.getModel(smodelname).setProperty("/results", oData);
-                        }else{
+                        if(oData.results !== undefined){
                             this.getModel(smodelname).setProperty("/results", oData.results);
+                            resolve(oData.results);
+                        }else{
+                            this.getModel(smodelname).setProperty("/results", oData);
+                            resolve(oData);
                         }
                         
                     }.bind(this),
                     error: function (oError) {
                         this.showBusy(false);
+                        var msg = JSON.parse(oError.responseText).error.message.value;
+                        MessageBox.error(msg);                    
+                        reject();
                     }.bind(this)
                 });
             } else {
                 this.showBusy(true);
-                this.getView().getModel().read(surl, {
+                this.getOwnerComponent().getModel().read(surl, {
                     filters: [ofilter],
                     success: function (oData) {
                         this.showBusy(false);
-                        this.getModel(smodelname).setProperty("/results", oData.results);
+                        if(oData.results !== undefined){
+                            this.getModel(smodelname).setProperty("/results", oData.results);
+                            resolve(oData.results);
+                        }else{
+                            this.getModel(smodelname).setProperty("/results", oData);
+                            resolve(oData);
+                        }
                     }.bind(this),
                     error: function (oError) {
                         this.showBusy(false);
+                        var msg = JSON.parse(oError.responseText).error.message.value;
+                        MessageBox.error(msg); 
+                        reject();
                     }.bind(this)
                 });
             }
+        });
         },
-
         onpost:function(Status){
             this.showBusy(true);
             var oPayload = this.getOwnerComponent().getModel("display").getData().results;

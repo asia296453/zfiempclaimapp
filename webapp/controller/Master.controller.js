@@ -39,6 +39,9 @@ sap.ui.define([
 			};
 
 			this.setModel(oViewModel, "masterView");
+
+			
+
 			// Make sure, busy indication is showing immediately so there is no
 			// break after the busy indication for loading the view's meta data is
 			// ended (see promise 'oWhenMetadataIsLoaded' in AppController)
@@ -47,16 +50,16 @@ sap.ui.define([
 				oViewModel.setProperty("/delay", iOriginalBusyDelay);
 			});
 
-			
 			this.getView().addEventDelegate({
 				onBeforeFirstShow: function () {
 					this._oListSelector.setBoundMasterList(oList);
 				}.bind(this)
 			});
-
 			this.getRouter().getRoute("master").attachPatternMatched(this._onMasterMatched, this);
 			this.getRouter().attachBypassed(this.onBypassed, this);
 			this._oODataModel = this.getOwnerComponent().getModel();
+			
+			
 		},
 
 		onBeforeRendering: function () {},
@@ -82,7 +85,6 @@ sap.ui.define([
 			this.getModel("appView").setProperty("/addEnabled", true);
 		},
 		onupdateStarted: function (oEvent) {
-			debugger;
 			this.suser = '';
             if(sap.ushell !== undefined && sap.ushell.Container !==undefined){
                 this.suser = sap.ushell.Container.getService("UserInfo").getId();
@@ -281,28 +283,46 @@ sap.ui.define([
 		 * @private
 		 */
 		_onMasterMatched: function () {
-			
-			this._oListSelector.oWhenListLoadingIsDone.then(
-				function (mParams) {
-					if (mParams.list.getMode() === "None") {
-						return;
-					}
-					this.getModel("appView").setProperty("/addEnabled", true);
-					if (!mParams.list.getSelectedItem()) {
-						this.showBusy(true);
+			debugger;
+			this.suser = '';
+            if(sap.ushell !== undefined && sap.ushell.Container !==undefined){
+                this.suser = sap.ushell.Container.getService("UserInfo").getId();
+            }
+            else{
+                this.suser = 'NTT_SRINIVAS';
+            }
+			var oFilter = new sap.ui.model.Filter("Apprid", sap.ui.model.FilterOperator.EQ, this.suser);
+			this.getOdata("/CRWFLOGSet", "MasterList", oFilter).then(function () {
+
+				var bReplace = !Device.system.phone;
+				var sclaimno = this.getModel("MasterList").getData().results[0].Claimno;
+				// oItem.getBindingContext().getProperty("Claimno")
+				this.getRouter().navTo("object", {
+					SerialNo: encodeURIComponent(sclaimno)
+				}, bReplace);
+			// this._oListSelector.oWhenListLoadingIsDone.then(
+			// 	function (mParams) {
+			// 		if (mParams.list.getMode() === "None") {
+			// 			return;
+			// 		}
+			// 		this.getModel("appView").setProperty("/addEnabled", true);
+			// 		if (!mParams.list.getSelectedItem()) {
+			// 			this.showBusy(true);
 							
-						this.getRouter().navTo("object", {
-							SerialNo: encodeURIComponent(mParams.firstListitem.getBindingContext().getProperty("Claimno"))
-						}, true);
-					}
-				}.bind(this),
-				function (mParams) {
-					if (mParams.error) {
-						return;
-					}
-					this.getRouter().getTargets().display("detailNoObjectsAvailable");
-				}.bind(this)
-			);
+			// 			this.getRouter().navTo("object", {
+			// 				SerialNo: encodeURIComponent(mParams.firstListitem.getBindingContext().getProperty("Claimno"))
+			// 			}, true);
+			// 		}
+			// 	}.bind(this),
+			// 	function (mParams) {
+			// 		if (mParams.error) {
+			// 			return;
+			// 		}
+			// 		this.getRouter().getTargets().display("detailNoObjectsAvailable");
+			// 	}.bind(this)
+			// );
+			
+		}.bind(this));
 		},
 
 		/**
@@ -313,9 +333,10 @@ sap.ui.define([
 		 */
 		_showDetail: function (oItem) {
 			var bReplace = !Device.system.phone;
-			
+			var sclaimno=this.getModel("MasterList").getProperty(oItem.getParent()._aSelectedPaths[0]).Claimno;
+			// oItem.getBindingContext().getProperty("Claimno")
 			this.getRouter().navTo("object", {
-				SerialNo: encodeURIComponent(oItem.getBindingContext().getProperty("Claimno"))
+				SerialNo: encodeURIComponent(sclaimno)
 			}, bReplace);
 		},
 		
@@ -340,7 +361,6 @@ sap.ui.define([
 		_applyFilterSearch: function () {
 			var aFilters = this._oListFilterState.aSearch.concat(this._oListFilterState.aFilter),
 				oViewModel = this.getModel("masterView");
-				debugger;
 			this._oList.getBinding("items").filter(aFilters);
 			// changes the noDataText of the list in case there are no filter results
 			if (aFilters.length !== 0) {
@@ -411,31 +431,8 @@ sap.ui.define([
 				return 'Version '+ CompVer; 
 			}
 		},
-		ongetKSAF4:function(e)
-        {
-            this.getView().getModel().read("/GENKSAF4Set", {
-                success: function (oData) {
-                    this.getView().getModel("MPP").setProperty("/f4Help", oData.results);
-                }.bind(this),
-                error: function (oError) {
-                    //this._errorHandler(oError);
-                }.bind(this)
-            });
-        },
-
-        onSelPosition:function(e)
-        {
-            var sSel = e.getParameter("value");
-            var oF4Data = this.getView().getModel("MPP").getData().f4Help;
-                    if (oF4Data && oF4Data.length > 0) {
-                        var selCurrRow = oF4Data.filter(function (el) {
-                            return el.PositionTitle == sSel;
-                        });
-                    }
-                    if (selCurrRow.length > 0) {
-                        e.getSource().getParent().getCells()[6].setText(selCurrRow[0].Grade.trim());//Grade autopopulate
-                    }
-        },
+	
+       
 
 
 		
