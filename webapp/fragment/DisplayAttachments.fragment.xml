@@ -13,11 +13,13 @@
 					fileName="{UploadAttachmentModel>FileName}" mimeType="{UploadAttachmentModel>Mimetype}" visibleEdit="false"
 					url="{UploadAttachmentModel>Url}" visibleDelete="false" selected="{UploadAttachmentModel>selected}">
 					<attributes>
-						<ObjectAttribute title="File Name : {UploadAttachmentModel>FileName}" text=" Uploaded by : {UploadAttachmentModel>UpldBy}"
+						<ObjectAttribute title="" text=" Uploaded by : {UploadAttachmentModel>UpldBy}" 
 							active="{UploadAttachmentModel>active}" press="onAttributePress"/>
+						<!-- <ObjectAttribute title=" : Date : {path: 'UploadAttachmentModel>UpldDat', type: 'sap.ui.model.type.String', formatter: '.DateFormatStr' }" text=" Time : {path: 'UploadAttachmentModel>UpldTime', type: 'sap.ui.model.type.String', formatter: '.timeformat' }"
+							active="{UploadAttachmentModel>active}" press="onAttributePress"/> -->
 					</attributes>
 					<statuses>
-						<ObjectStatus title="{title}" text="{UploadAttachmentModel>text}" state="{UploadAttachmentModel>state}"/>
+						<ObjectStatus title="{path: 'UploadAttachmentModel>UpldDat', type: 'sap.ui.model.type.String', formatter: '.DateFormatStr' }" text="{path: 'UploadAttachmentModel>UpldTime', type: 'sap.ui.model.type.String', formatter: '.timeformat' }" state="{UploadAttachmentModel>state}"/>
 					</statuses>
 				</UploadCollectionItem>
 			</items>

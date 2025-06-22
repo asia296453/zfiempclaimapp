@@ -156,7 +156,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
                     Claimno: e.results[o].Claimno,
                     Serial: e.results[o].Serial,
                     UpldBy: e.results[o].UpldBy,
-                    UploadedOn: e.results[o].UpldDat,
+                    UpldDat: e.results[o].UpldDat,
+                    UpldTime:e.results[o].UpldTime,
                     Uname: e.results[o].UpldBy,
                     Url: surl
                 };
@@ -263,6 +264,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
         }
         },
         DateFormatStr: function (oVal) {
+            debugger;
             if(oVal !== null){
             if (typeof oVal === 'string' || oVal instanceof String) {
                 return oVal.substr(8, 2) + "-" + oVal.substr(5, 2) + "-" + oVal.substr(0, 4);
