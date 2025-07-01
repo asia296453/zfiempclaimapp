@@ -10,7 +10,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
             var e = 'AT';
             var t = this.getView(),
                 a = this.getModel("i18n");
-            this._oAttachmentDialog = t.byId("idDialogUploadAttachments11");
+           // this._oAttachmentDialog = t.byId("idDialogUploadAttachments11");
             var LabelText = e;
             if (!this._oAttachmentDialog) {
                 this._oAttachmentDialog = sap.ui.xmlfragment(t.getId(), "zfiempclaimapp.fragment.DisplayAttachments", this);
@@ -29,7 +29,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
             var e = 'AT';
             var t = this.getView(),
                 a = this.getModel("i18n");
-            this._oAttachmentDialog = t.byId("idDialogUploadAttachments");
+        //    this._oAttachmentDialog = t.byId("idDialogUploadAttachments");
             var LabelText = e;
             if (!this._oAttachmentDialog) {
                 this._oAttachmentDialog = sap.ui.xmlfragment(t.getId(), "zfiempclaimapp.fragment.UploadAttachments", this);
