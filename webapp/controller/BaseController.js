@@ -380,7 +380,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
                                         })) || "";
                                         debugger;
                                        
-                                        var finalUrl = window.location.href.split("&Claimno=96")[0] + href;
+                                        var finalUrl = window.location.href.split("&Claimno=")[0] + href;
                                         debugger;
                                         sap.m.URLHelper.redirect(finalUrl, true);
                                         window.close();
