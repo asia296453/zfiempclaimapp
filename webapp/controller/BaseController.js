@@ -264,7 +264,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
         }
         },
         DateFormatStr: function (oVal) {
-            debugger;
             if(oVal !== null){
             if (typeof oVal === 'string' || oVal instanceof String) {
                 return oVal.substr(8, 2) + "-" + oVal.substr(5, 2) + "-" + oVal.substr(0, 4);
@@ -275,10 +274,12 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
             }
         }
         },
-        getViewData: function (sValue) {
+        getViewData: function (sValue,suserid) {
             var oFilter = new sap.ui.model.Filter("Claimno", sap.ui.model.FilterOperator.EQ, sValue);
             this.getOdata("/CLAIMREQSet(Claimno='" + sValue + "')","display", null,true);
             this.getOdata("/CRWFLOGSet","approvallog", oFilter);
+            this.getOdata("/TAXCODESet","Taxcode", null);
+            this.getOdata("/USREMPSet(Usrid='" + suserid + "')","user", null);
           },
           getOdata: function (surl, smodelname, ofilter,sexpand) {
             var sparam = '';               
@@ -294,6 +295,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
                     },
                     success: function (oData) {
                         this.showBusy(false);
+                        debugger;
                         if(oData.results !== undefined){
                             this.getModel(smodelname).setProperty("/results", oData.results);
                             resolve(oData.results);
@@ -366,8 +368,23 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
                                     var sstr1 = {
                                         "editable": false
                                     }
-                                    //asia
+                                    
                                     this.getOwnerComponent().getModel("Header").setProperty("/data", sstr1);
+                                    if(window.location.href.indexOf("Claimno") !== -1){
+                                        debugger;
+                                        var sclaimno = this.getView().getModel("display").getData().results.Claimno;
+                                        var xnavservice = sap.ushell && sap.ushell.Container && sap.ushell.Container.getService && sap.ushell.Container.getService("CrossApplicationNavigation");
+                                        var href = (xnavservice && xnavservice.hrefForExternal({
+                                            target: { semanticObject: "WorkflowTask", action: "displayInbox" }
+                                           // params: { "Claimno": sclaimno }
+                                        })) || "";
+                                        debugger;
+                                       
+                                        var finalUrl = window.location.href.split("&Claimno=96")[0] + href;
+                                        debugger;
+                                        sap.m.URLHelper.redirect(finalUrl, true);
+                                        window.close();
+                                    }
                                 }
                             },
                         });

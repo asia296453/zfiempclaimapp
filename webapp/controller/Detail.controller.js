@@ -84,7 +84,14 @@ sap.ui.define([
 			this.setModel(a, "DisplayAttachmentModel");
 			this.setModel(b, "AttachmentType");
 			//this.readAllAttachmentData('', '');
-			this.getViewData(sSerialNo);
+			this.suser = '';
+            if(sap.ushell !== undefined && sap.ushell.Container !==undefined){
+                this.suser = sap.ushell.Container.getService("UserInfo").getId();
+            }
+            else{
+                this.suser = 'NTT_VENU';
+            }
+			this.getViewData(sSerialNo,this.suser);
 			var sstr1 = {
 				"editable": true
 			}

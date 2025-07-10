@@ -289,9 +289,29 @@ sap.ui.define([
                 this.suser = sap.ushell.Container.getService("UserInfo").getId();
             }
             else{
-                this.suser = 'NTT_SRINIVAS';
+                this.suser = 'NTT_SOWJANYA';
             }
-			var oFilter = new sap.ui.model.Filter("Apprid", sap.ui.model.FilterOperator.EQ, this.suser);
+			var sclaimrequest = '';
+			if(window.location.href.indexOf("Claimno") !== -1){
+				var complete_url = window.location.href;
+				var pieces = complete_url.split("?");
+				var params = pieces[1].split("&");
+				$.each(params, function (key, value) {
+					var param_value = value.split("=");
+					if(param_value[0]==='Claimno'){
+						sclaimrequest = param_value[1];
+					}
+				});
+			}
+			debugger;
+			if(sclaimrequest !== ''){
+				var oFilter1 = new sap.ui.model.Filter("Claimno", sap.ui.model.FilterOperator.EQ, sclaimrequest);
+				var oFilter2 =  new sap.ui.model.Filter("Apprid", sap.ui.model.FilterOperator.EQ, this.suser);
+				var oFilter = [oFilter1,oFilter2];
+			}else{
+				var oFilter = new sap.ui.model.Filter("Apprid", sap.ui.model.FilterOperator.EQ, this.suser);
+			}
+			
 			this.getOdata("/CRWFLOGSet", "MasterList", oFilter).then(function () {
 
 				var bReplace = !Device.system.phone;

@@ -132,6 +132,9 @@
                         <Column  >
                             <Text text="{i18n>ExpenseAmount}" />
                         </Column>
+						<Column  >
+                            <Text text="{i18n>Taxcode}" />
+                        </Column>
                        
                     </columns>
                     <items>
@@ -141,6 +144,10 @@
 						   <Text text='{item>Saknr}'></Text>
 						   <Text text='{item>Stext}'></Text>
                           <Text text='{item>Amt}' ></Text>
+						  <ComboBox items="{Taxcode>/results}"  selectedKey="{item>Taxcode}" editable="{= ${user>/results/Apuser}==='X'? true : false}"
+						  enabled="{= ${user>/results/Apuser}==='X'? true : false}">
+                                 <core:Item key="{Taxcode>Mwskz}" text="{Taxcode>Mwskz}"/>
+                                </ComboBox>
                         </ColumnListItem>
                     </items>
                 </Table>
@@ -229,11 +236,11 @@
 
 				<Label text="{i18n>RaisedBy}" />
 				<Text text="{display>/results/Pernr}"  />
-                <Text text="{display>/results/Crtby}">
+                <!-- <Text text="{display>/results/Crtby}">
 					<layoutData>
 						<l:GridData span="XL1 L2 M2 S4" />
 					</layoutData>
-				</Text>
+				</Text> -->
 			</f:content>
 		</f:SimpleForm>
     </VBox>

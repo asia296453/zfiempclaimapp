@@ -28,6 +28,8 @@ sap.ui.define(["sap/ui/core/UIComponent", "sap/ui/Device", "zfiempclaimapp/model
 			this.setModel(new sap.ui.model.json.JSONModel(), "Master");
 			this.setModel(new sap.ui.model.json.JSONModel(), "MasterList");
 			this.setModel(new sap.ui.model.json.JSONModel(), "item");
+			this.setModel(new sap.ui.model.json.JSONModel(), "user");
+			this.setModel(new sap.ui.model.json.JSONModel(), "Taxcode");
 
 			var jModel28 = new sap.ui.model.json.JSONModel();
             this.setModel(jModel28, "DisplayAttachmentModel");
