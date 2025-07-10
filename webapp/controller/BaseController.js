@@ -277,14 +277,21 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
         },
         getViewData: function (sValue) {
             var oFilter = new sap.ui.model.Filter("Claimno", sap.ui.model.FilterOperator.EQ, sValue);
-            this.getOdata("/CLAIMREQSet(Claimno='" + sValue + "',Pernr='')","display", null);
+            this.getOdata("/CLAIMREQSet(Claimno='" + sValue + "')","display", null,true);
             this.getOdata("/CRWFLOGSet","approvallog", oFilter);
           },
-          getOdata: function (surl, smodelname, ofilter) {
+          getOdata: function (surl, smodelname, ofilter,sexpand) {
+            var sparam = '';               
+                if(sexpand !== undefined && sexpand === true){
+                    sparam = "ClaimToItems";
+                }
             return new Promise((resolve, reject) => {
             if (ofilter === null) {
                 this.showBusy(true);
                 this.getOwnerComponent().getModel().read(surl, {
+                    urlParameters: {
+                        "$expand": sparam
+                    },
                     success: function (oData) {
                         this.showBusy(false);
                         if(oData.results !== undefined){
@@ -292,6 +299,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
                             resolve(oData.results);
                         }else{
                             this.getModel(smodelname).setProperty("/results", oData);
+                            if(oData.ClaimToItems !== undefined && oData.ClaimToItems.results.length > 0){
+                                this.getModel("item").setProperty("/results", oData.ClaimToItems.results);
+                            }
                             resolve(oData);
                         }
                         
@@ -331,6 +341,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
             this.showBusy(true);
             var oPayload = this.getOwnerComponent().getModel("display").getData().results;
             oPayload.Status = Status;
+            oPayload.ClaimToItems = this.getOwnerComponent().getModel("item").getData().results;
             this.Status = Status;
                 this.getModel().create("/CLAIMREQSet", oPayload, {
                     method: "POST",
