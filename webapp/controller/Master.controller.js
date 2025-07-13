@@ -283,7 +283,7 @@ sap.ui.define([
 		 * @private
 		 */
 		_onMasterMatched: function () {
-			debugger;
+			
 			this.suser = '';
             if(sap.ushell !== undefined && sap.ushell.Container !==undefined){
                 this.suser = sap.ushell.Container.getService("UserInfo").getId();
@@ -303,7 +303,7 @@ sap.ui.define([
 					}
 				});
 			}
-			debugger;
+			
 			if(sclaimrequest !== ''){
 				var oFilter1 = new sap.ui.model.Filter("Claimno", sap.ui.model.FilterOperator.EQ, sclaimrequest);
 				var oFilter2 =  new sap.ui.model.Filter("Apprid", sap.ui.model.FilterOperator.EQ, this.suser);

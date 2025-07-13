@@ -73,6 +73,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
             })
         },
         onPressApprove: function (oEvt) {
+            this.getView().getModel("display").getData().results.Comments = "";
+            this.getView().getModel("display").refresh();
             this.getView().getModel("LocalModel").setProperty("/decision", "AP");
             if (!this._DialogRemark) {
                 this._DialogRemark = sap.ui.xmlfragment("zfiempclaimapp.fragment.remark", this);
@@ -81,6 +83,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
             this._DialogRemark.open();
         },
         onPressReject: function (oEvt) {
+            this.getView().getModel("display").getData().results.Comments = "";
+            this.getView().getModel("display").refresh();
             this.getView().getModel("LocalModel").setProperty("/decision", "RJ");
             if (!this._DialogRemark) {
                 this._DialogRemark = sap.ui.xmlfragment("zfiempclaimapp.fragment.remark", this);
@@ -295,7 +299,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
                     },
                     success: function (oData) {
                         this.showBusy(false);
-                        debugger;
+                        
                         if(oData.results !== undefined){
                             this.getModel(smodelname).setProperty("/results", oData.results);
                             resolve(oData.results);
@@ -349,7 +353,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
                     method: "POST",
                     success: function (oData) {
                         this.showBusy(false);
-                        debugger;
+                        
                         var sMsg = "Claim No." + oData.Claimno ;//+ " saved Successfully ";
                         if(this.Status === 'AP'){
                             sMsg = sMsg + " is approved";
@@ -371,17 +375,17 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
                                     
                                     this.getOwnerComponent().getModel("Header").setProperty("/data", sstr1);
                                     if(window.location.href.indexOf("Claimno") !== -1){
-                                        debugger;
+                                        
                                         var sclaimno = this.getView().getModel("display").getData().results.Claimno;
                                         var xnavservice = sap.ushell && sap.ushell.Container && sap.ushell.Container.getService && sap.ushell.Container.getService("CrossApplicationNavigation");
                                         var href = (xnavservice && xnavservice.hrefForExternal({
                                             target: { semanticObject: "WorkflowTask", action: "displayInbox" }
                                            // params: { "Claimno": sclaimno }
                                         })) || "";
-                                        debugger;
+                                        
                                        
                                         var finalUrl = window.location.href.split("&Claimno=")[0] + href;
-                                        debugger;
+                                        
                                         sap.m.URLHelper.redirect(finalUrl, true);
                                         window.close();
                                     }
