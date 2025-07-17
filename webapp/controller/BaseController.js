@@ -72,7 +72,78 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
                 }
             })
         },
+
+        onValidation: function (oval) {
+            var bflag = true;
+            debugger;
+            if(this.getView().getModel("user") !== undefined && 
+                this.getView().getModel("user").getData().results.Apuser === 'X'){
+            this.getView().getModel("item").getData().results.forEach(function (item, index) {
+                if(item.Taxcode === '' && bflag){
+                    MessageBox.error("Please enter Tax Code");
+                    bflag = false;
+                    return;
+                }
+            });
+        }
+
+            return bflag;
+        },
         onPressApprove: function (oEvt) {
+            var bflag = this.onValidation(this.getOwnerComponent().getModel("display").getData().results);
+            if(bflag)
+                {
+                    sap.m.MessageBox.confirm("Please confirm to Approve?", {
+                initialFocus: sap.m.MessageBox.Action.CANCEL,
+                onClose: function (sButton) {
+                    if (sButton == "OK") {  
+                        this.onpost("AP");
+                    }
+                    if (sButton == "CANCEL") {
+                        return;
+                    }
+                }.bind(this)
+            });
+        }
+        },
+        
+        onPressReject: function (oEvt) {
+            var bflag = this.onValidation(this.getOwnerComponent().getModel("display").getData().results);
+            if(bflag)
+                {
+                    sap.m.MessageBox.confirm("Please confirm to Reject?", {
+                initialFocus: sap.m.MessageBox.Action.CANCEL,
+                onClose: function (sButton) {
+                    if (sButton == "OK") {  
+                        this.onpost("RJ");
+                    }
+                    if (sButton == "CANCEL") {
+                        return;
+                    }
+                }.bind(this)
+            });
+        }
+        },
+                
+        onPressSendBack: function (oEvt) {
+            var bflag = this.onValidation(this.getOwnerComponent().getModel("display").getData().results);
+            if(bflag)
+                {
+                    sap.m.MessageBox.confirm("Please confirm to Resend?", {
+                initialFocus: sap.m.MessageBox.Action.CANCEL,
+                onClose: function (sButton) {
+                    if (sButton == "OK") {  
+                        this.onpost("RE");
+                    }
+                    if (sButton == "CANCEL") {
+                        return;
+                    }
+                }.bind(this)
+            });
+        }
+        },
+
+        onPressApprove1: function (oEvt) {
             this.getView().getModel("display").getData().results.Comments = "";
             this.getView().getModel("display").refresh();
             this.getView().getModel("LocalModel").setProperty("/decision", "AP");
@@ -82,7 +153,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
             };
             this._DialogRemark.open();
         },
-        onPressReject: function (oEvt) {
+        onPressReject1: function (oEvt) {
             this.getView().getModel("display").getData().results.Comments = "";
             this.getView().getModel("display").refresh();
             this.getView().getModel("LocalModel").setProperty("/decision", "RJ");
@@ -92,7 +163,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History", "sap
             };
             this._DialogRemark.open();
         },
-        onPressSendBack: function (oEvt) {
+        onPressSendBack1: function (oEvt) {
             this.getView().getModel("LocalModel").setProperty("/decision", "RE");
             if (!this._DialogRemark) {
                 this._DialogRemark = sap.ui.xmlfragment("zfiempclaimapp.fragment.remark", this);
